@@ -7,6 +7,7 @@ use App\Models\Certificate;
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Certificate>
@@ -21,6 +22,7 @@ class CertificateFactory extends Factory
         $issuedAt = Carbon::instance(fake()->dateTimeBetween('-2 years', 'now'));
 
         return [
+            'uuid' => (string) Str::uuid(),
             'certificate_number' => 'AAI-'.$issuedAt->year.'-'.fake()->unique()->numerify('#####'),
             'recipient_name' => fake()->name(),
             'ic_number' => fake()->date('ymd', '-20 years').'-'.fake()->numerify('##').'-'.fake()->numerify('####'),

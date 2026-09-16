@@ -101,3 +101,13 @@ it('links from the public register to the digital certificate', function () {
         ->assertOk()
         ->assertSee($certificate->publicUrl());
 });
+
+it('still gets a uuid when model events are muted', function () {
+    // Seeders use WithoutModelEvents, so the creating hook alone is not enough.
+    $certificate = Certificate::withoutEvents(
+        fn () => Certificate::factory()->create()
+    );
+
+    expect($certificate->uuid)->not->toBeNull()
+        ->and(Str::isUuid($certificate->uuid))->toBeTrue();
+});

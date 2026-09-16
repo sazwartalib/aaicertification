@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Route;
 use Inertia\Testing\AssertableInertia;
 
 it('renders the login screen', function () {
@@ -41,27 +42,13 @@ it('logs a user out', function () {
     $this->assertGuest();
 });
 
-it('registers a new staff account', function () {
-    $this->post('/register', [
-        'name' => 'Nur Amira',
-        'email' => 'amira@aaicertification.test',
-        'password' => 'secret-password',
-        'password_confirmation' => 'secret-password',
-    ])->assertRedirect('/admin');
-
-    $this->assertAuthenticated();
-    expect(User::where('email', 'amira@aaicertification.test')->exists())->toBeTrue();
+it('has no public sign-up route', function () {
+    $this->get('/register')->assertNotFound();
+    $this->post('/register', [])->assertNotFound();
 });
 
-it('rejects a registration with a duplicate email', function () {
-    $user = User::factory()->create();
-
-    $this->post('/register', [
-        'name' => 'Duplicate',
-        'email' => $user->email,
-        'password' => 'secret-password',
-        'password_confirmation' => 'secret-password',
-    ])->assertSessionHasErrors('email');
+it('no longer registers a named sign-up route', function () {
+    expect(Route::has('register'))->toBeFalse();
 });
 
 it('redirects authenticated users away from the login screen', function () {

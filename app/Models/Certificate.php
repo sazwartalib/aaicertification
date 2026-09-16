@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 #[Fillable([
+    'uuid',
     'certificate_number',
     'recipient_name',
     'ic_number',
