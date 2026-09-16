@@ -20,6 +20,7 @@ const navigation = [
     { label: 'Categories', href: '/admin/categories', icon: 'chart-bar', match: /^\/admin\/categories/ },
     { label: 'Enrolments', href: '/admin/enrollments', icon: 'users', match: /^\/admin\/enrollments/ },
     { label: 'Certificates', href: '/admin/certificates', icon: 'shield-check', match: /^\/admin\/certificates/ },
+    { label: 'Administrators', href: '/admin/administrators', icon: 'user', match: /^\/admin\/administrators/ },
 ];
 
 const currentPath = computed(() => new URL(page.url, 'http://localhost').pathname);
@@ -141,9 +142,17 @@ function logout() {
                                     <p class="truncate text-sm font-semibold text-navy-900">{{ user?.name }}</p>
                                     <p class="truncate text-xs text-navy-500">{{ user?.email }}</p>
                                 </div>
+                                <Link
+                                    href="/admin/account"
+                                    class="flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-sm font-medium text-navy-700 transition hover:bg-navy-50"
+                                    @click="accountOpen = false"
+                                >
+                                    <Icon name="lock-closed" class="h-4 w-4 text-navy-400" />
+                                    Account settings
+                                </Link>
                                 <button
                                     type="button"
-                                    class="flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-sm font-medium text-navy-700 transition hover:bg-navy-50"
+                                    class="flex w-full items-center gap-2.5 border-t border-navy-100 px-4 py-2.5 text-left text-sm font-medium text-navy-700 transition hover:bg-navy-50"
                                     @click="logout"
                                 >
                                     <Icon name="logout" class="h-4 w-4 text-navy-400" />

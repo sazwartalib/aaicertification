@@ -198,6 +198,7 @@ class DatabaseSeeder extends Seeder
 
         // Well-known sample certificates for demonstrating public verification.
         Certificate::create([
+            'uuid' => 'b1d9f5c0-4f3a-4d8e-9a21-0c7e5f2a1b34',
             'certificate_number' => 'AAI-2025-00001',
             'recipient_name' => 'Nurul Aisyah binti Rahman',
             'course_id' => $created->firstWhere('title', 'ISO 9001:2015 Lead Auditor')?->id,
@@ -209,6 +210,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Certificate::create([
+            'uuid' => 'c2e8a4d1-5b6c-4f79-8d32-1a9b7c4e2d56',
             'certificate_number' => 'AAI-2024-00742',
             'recipient_name' => 'James Anthony Lim',
             'course_id' => $created->firstWhere('title', 'ISO/IEC 27001:2022 Lead Implementer')?->id,
@@ -220,6 +222,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Certificate::create([
+            'uuid' => 'd3f7b5e2-6c7d-4a81-9e43-2b8c6d5f3e78',
             'certificate_number' => 'AAI-2023-00318',
             'recipient_name' => 'Siti Farah binti Osman',
             'course_id' => $created->firstWhere('title', 'ISO 45001:2018 Lead Auditor')?->id,

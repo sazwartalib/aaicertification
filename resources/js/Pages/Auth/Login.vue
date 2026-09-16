@@ -6,10 +6,6 @@ import InputField from '../../Components/InputField.vue';
 import Turnstile from '../../Components/Turnstile.vue';
 import Icon from '../../Components/Icon.vue';
 
-defineProps({
-    canRegister: { type: Boolean, default: true },
-});
-
 const turnstile = ref(null);
 
 const form = useForm({
@@ -90,9 +86,8 @@ function submit() {
             </button>
         </form>
 
-        <p v-if="canRegister" class="mt-8 text-center text-sm text-navy-600">
-            Need a staff account?
-            <Link href="/register" class="font-semibold text-navy-900 underline-offset-4 transition hover:underline">Create one</Link>
+        <p class="mt-8 text-center text-xs text-navy-500">
+            Accounts are created by an administrator. Contact your programme administrator if you need access.
         </p>
     </AuthLayout>
 </template>
