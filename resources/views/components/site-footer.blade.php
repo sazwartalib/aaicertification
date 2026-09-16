@@ -32,6 +32,13 @@
                     <li><a href="{{ route('verify.index') }}" class="inline-flex items-center gap-1.5 transition hover:text-white">Verify a Certificate</a></li>
                     <li><a href="{{ route('about') }}" class="inline-flex items-center gap-1.5 transition hover:text-white">About Us</a></li>
                     <li><a href="{{ route('contact') }}" class="inline-flex items-center gap-1.5 transition hover:text-white">Contact</a></li>
+                    <li class="pt-2">
+                        <a href="{{ auth()->check() ? route('admin.dashboard') : route('login') }}"
+                           class="inline-flex items-center gap-2 rounded-lg border border-navy-700 px-3 py-2 font-medium text-navy-200 transition hover:border-gold-500 hover:text-gold-400">
+                            <x-ui-icon name="lock-closed" class="h-4 w-4" />
+                            {{ auth()->check() ? 'Admin console' : 'Staff login' }}
+                        </a>
+                    </li>
                 </ul>
             </div>
 

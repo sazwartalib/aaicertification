@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\User;
 
 it('renders the home page with featured courses', function () {
     $featured = Course::factory()->featured()->create();
@@ -54,4 +55,19 @@ it('returns 404 for an unpublished course detail page', function () {
     $course = Course::factory()->unpublished()->create();
 
     $this->get(route('courses.show', $course))->assertNotFound();
+});
+
+it('offers a staff login link in the footer to guests', function () {
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Staff login')
+        ->assertSee(route('login'));
+});
+
+it('points the footer link at the admin console once signed in', function () {
+    $this->actingAs(User::factory()->create())
+        ->get('/')
+        ->assertOk()
+        ->assertSee('Admin console')
+        ->assertSee(route('admin.dashboard'));
 });
