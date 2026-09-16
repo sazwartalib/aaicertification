@@ -2,22 +2,22 @@
 
 namespace App\Enums;
 
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasLabel;
-
-enum EnrollmentStatus: string implements HasColor, HasLabel
+enum EnrollmentStatus: string
 {
     case Pending = 'pending';
     case Contacted = 'contacted';
     case Confirmed = 'confirmed';
     case Cancelled = 'cancelled';
 
-    public function getLabel(): string
+    public function label(): string
     {
         return ucfirst($this->value);
     }
 
-    public function getColor(): string
+    /**
+     * Badge colour tone used by the admin UI.
+     */
+    public function tone(): string
     {
         return match ($this) {
             self::Pending => 'warning',
@@ -25,5 +25,16 @@ enum EnrollmentStatus: string implements HasColor, HasLabel
             self::Confirmed => 'success',
             self::Cancelled => 'danger',
         };
+    }
+
+    /**
+     * @return array<int, array{value: string, label: string}>
+     */
+    public static function options(): array
+    {
+        return array_map(
+            fn (self $case): array => ['value' => $case->value, 'label' => $case->label()],
+            self::cases(),
+        );
     }
 }

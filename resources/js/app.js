@@ -1,7 +1,10 @@
 /**
  * Progressive enhancement for the marketing site.
- * Everything here is optional polish — the site works fully without JS.
+ * Everything here is optional polish — the site works fully without JS,
+ * with one exception: [data-qr] elements are rendered here (see initQrCodes).
  */
+
+import QRCode from 'qrcode';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -213,7 +216,50 @@ function initBackToTop() {
     });
 }
 
+/* ---- QR codes -------------------------------------------------------- */
+/**
+ * Render every [data-qr] element as an inline SVG pointing at its data-qr URL.
+ *
+ * SVG keeps the code crisp at any print size. Rendering is awaited before the
+ * print dialog opens so a certificate printed straight after load still has it.
+ */
+const qrReady = [];
+
+function initQrCodes() {
+    document.querySelectorAll('[data-qr]').forEach((element) => {
+        const value = element.dataset.qr;
+
+        if (!value) {
+            return;
+        }
+
+        const task = QRCode.toString(value, {
+            type: 'svg',
+            errorCorrectionLevel: 'M',
+            margin: 0,
+            color: {
+                dark: element.dataset.qrColor || '#142244',
+                light: '#0000',
+            },
+        })
+            .then((svg) => {
+                element.innerHTML = svg;
+                element.querySelector('svg')?.setAttribute('class', 'h-full w-full');
+                element.removeAttribute('data-qr-pending');
+            })
+            .catch(() => {
+                element.setAttribute('data-qr-failed', 'true');
+            });
+
+        qrReady.push(task);
+    });
+}
+
+/** Resolves once every QR code on the page has been drawn. */
+window.qrCodesReady = () => Promise.all(qrReady);
+
 document.addEventListener('DOMContentLoaded', () => {
+    initQrCodes();
     initReveal();
     initCounters();
     initNav();

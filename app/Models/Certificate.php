@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 #[Fillable([
     'certificate_number',
@@ -40,9 +41,24 @@ class Certificate extends Model
         'status' => 'valid',
     ];
 
+    protected static function booted(): void
+    {
+        static::creating(function (self $certificate): void {
+            $certificate->uuid ??= (string) Str::uuid();
+        });
+    }
+
     public function getRouteKeyName(): string
     {
         return 'certificate_number';
+    }
+
+    /**
+     * Unguessable public URL for the digital certificate, encoded into the printed QR code.
+     */
+    public function publicUrl(): string
+    {
+        return route('certificates.show', $this->uuid);
     }
 
     public function course(): BelongsTo
@@ -54,6 +70,20 @@ class Certificate extends Model
     {
         return $this->status === CertificateStatus::Valid
             && (is_null($this->expires_at) || $this->expires_at->isFuture());
+    }
+
+    /**
+     * The single state shown on the public verification pages.
+     *
+     * @return 'valid'|'revoked'|'expired'
+     */
+    public function verificationState(): string
+    {
+        if ($this->status === CertificateStatus::Revoked) {
+            return 'revoked';
+        }
+
+        return $this->isExpired() ? 'expired' : 'valid';
     }
 
     public function isExpired(): bool

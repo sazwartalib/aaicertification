@@ -10,14 +10,14 @@
                 @if ($course->category)
                     <span class="badge bg-navy-800 text-navy-100">{{ $course->category->name }}</span>
                 @endif
-                <span class="badge bg-gold-500 text-navy-950">{{ $course->level->getLabel() }}</span>
+                <span class="badge bg-gold-500 text-navy-950">{{ $course->level->label() }}</span>
             </div>
             <h1 class="mt-4 max-w-3xl text-4xl font-bold text-white">{{ $course->title }}</h1>
             <p class="mt-4 max-w-3xl text-lg text-navy-200">{{ $course->summary }}</p>
 
             <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-navy-300">
                 <span class="flex items-center gap-2"><x-ui-icon name="clock" class="h-4 w-4 text-gold-400" /> {{ $course->duration }}</span>
-                <span class="flex items-center gap-2"><x-ui-icon name="video-camera" class="h-4 w-4 text-gold-400" /> {{ $course->delivery_mode->getLabel() }}</span>
+                <span class="flex items-center gap-2"><x-ui-icon name="video-camera" class="h-4 w-4 text-gold-400" /> {{ $course->delivery_mode->label() }}</span>
                 <span class="flex items-center gap-2"><x-ui-icon name="banknotes" class="h-4 w-4 text-gold-400" /> {{ $course->price ? 'RM '.number_format((float) $course->price) : 'Fee on request' }}</span>
             </div>
 
@@ -51,8 +51,8 @@
                 <dl class="rounded-xl border border-navy-100 bg-navy-50/50 p-6 text-sm">
                     @foreach ([
                         ['icon' => 'clock', 'label' => 'Duration', 'value' => $course->duration],
-                        ['icon' => 'video-camera', 'label' => 'Delivery', 'value' => $course->delivery_mode->getLabel()],
-                        ['icon' => 'academic-cap', 'label' => 'Level', 'value' => $course->level->getLabel()],
+                        ['icon' => 'video-camera', 'label' => 'Delivery', 'value' => $course->delivery_mode->label()],
+                        ['icon' => 'academic-cap', 'label' => 'Level', 'value' => $course->level->label()],
                     ] as $row)
                         <div class="flex items-center justify-between border-b border-navy-100 py-2.5">
                             <dt class="flex items-center gap-2 text-navy-500"><x-ui-icon :name="$row['icon']" class="h-4 w-4" /> {{ $row['label'] }}</dt>
@@ -101,6 +101,8 @@
                                 <p class="mt-1.5 flex items-center gap-1 text-xs text-rose-600"><x-ui-icon name="exclamation-triangle" class="h-3.5 w-3.5" /> {{ $message }}</p>
                             @enderror
                         </div>
+
+                        <x-turnstile />
 
                         <button type="submit" class="btn-navy btn-block" data-loading-label="Submitting…">
                             Submit enrolment request

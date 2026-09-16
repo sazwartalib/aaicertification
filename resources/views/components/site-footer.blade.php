@@ -55,7 +55,14 @@
         </div>
 
         <div class="mt-12 flex flex-col gap-3 border-t border-navy-800 pt-6 text-xs text-navy-400 sm:flex-row sm:items-center sm:justify-between">
-            <p>&copy; {{ now()->year }} {{ config('app.name') }}. All rights reserved.</p>
+            <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span>&copy; {{ now()->year }} {{ config('app.name') }}. All rights reserved.</span>
+                <span aria-hidden="true">·</span>
+                <a href="{{ auth()->check() ? route('admin.dashboard') : route('login') }}" class="inline-flex items-center gap-1.5 transition hover:text-white">
+                    <x-ui-icon name="lock-closed" class="h-3.5 w-3.5" />
+                    {{ auth()->check() ? 'Admin console' : 'Staff login' }}
+                </a>
+            </p>
             <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
                 <span class="inline-flex items-center gap-1.5"><x-ui-icon name="shield-check" class="h-3.5 w-3.5 text-gold-400" /> ISO 9001</span>
                 <span aria-hidden="true">·</span>

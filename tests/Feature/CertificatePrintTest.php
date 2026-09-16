@@ -7,7 +7,7 @@ it('redirects guests away from the certificate print view', function () {
     $certificate = Certificate::factory()->create();
 
     $this->get(route('certificates.print', $certificate))
-        ->assertRedirect('/admin/login');
+        ->assertRedirect('/login');
 });
 
 it('shows the full certificate details to an authenticated user', function () {

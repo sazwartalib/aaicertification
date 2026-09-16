@@ -13,7 +13,7 @@ class EnrollmentController extends Controller
     {
         abort_unless($course->is_published, Response::HTTP_NOT_FOUND);
 
-        $course->enrollments()->create($request->validated());
+        $course->enrollments()->create($request->safe()->except('cf-turnstile-response'));
 
         return redirect()
             ->route('courses.show', $course)
