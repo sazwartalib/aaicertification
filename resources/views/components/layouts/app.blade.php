@@ -1,4 +1,4 @@
-@props(['title' => null, 'description' => null])
+@props(['title' => null, 'description' => null, 'robots' => null])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
@@ -8,6 +8,9 @@
 
     <title>{{ $title ? $title.' — '.config('app.name') : config('app.name').' — Certification & Training' }}</title>
     <meta name="description" content="{{ $description ?? 'Accredited certification and professional training programs delivered by '.config('app.name').'.' }}">
+    @if ($robots)
+        <meta name="robots" content="{{ $robots }}">
+    @endif
 
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -28,5 +31,7 @@
     </main>
 
     <x-site-footer />
+
+    @stack('scripts')
 </body>
 </html>

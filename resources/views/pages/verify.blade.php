@@ -147,6 +147,15 @@
                         <dd class="mt-0.5 font-semibold text-navy-900">{{ $certificate->expires_at?->format('d M Y') ?? 'No expiry' }}</dd>
                     </div>
                 </dl>
+
+                <div class="border-t border-navy-100/70 bg-white/60 px-6 py-4">
+                    <a href="{{ $certificate->publicUrl() }}"
+                       class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-700 transition hover:text-navy-900">
+                        <x-ui-icon name="qr-code" class="h-4 w-4" />
+                        Open the shareable digital certificate
+                        <x-ui-icon name="arrow-right" class="h-4 w-4" />
+                    </a>
+                </div>
             </div>
 
             <a href="{{ route('verify.index') }}" class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-navy-700 transition hover:text-navy-900">

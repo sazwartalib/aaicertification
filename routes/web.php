@@ -4,9 +4,9 @@ use App\Http\Controllers\CertificatePrintController;
 use App\Http\Controllers\CertificateVerificationController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DigitalCertificateController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\PageController;
-use Filament\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -18,9 +18,14 @@ Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'store'])-
 
 Route::get('/verify', [CertificateVerificationController::class, 'index'])->name('verify.index');
 
+Route::get('/c/{certificate:uuid}', [DigitalCertificateController::class, 'show'])->name('certificates.show');
+
 Route::get('/admin/certificates/{certificate}/print', [CertificatePrintController::class, 'show'])
-    ->middleware(Authenticate::class)
+    ->middleware('auth')
     ->name('certificates.print');
 
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';

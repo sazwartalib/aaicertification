@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Turnstile;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,6 +24,7 @@ class StoreContactRequest extends FormRequest
             'phone' => ['required', 'string', 'max:40'],
             'company' => ['nullable', 'string', 'max:150'],
             'message' => ['required', 'string', 'max:2000'],
+            'cf-turnstile-response' => Turnstile::rules(),
         ];
     }
 }

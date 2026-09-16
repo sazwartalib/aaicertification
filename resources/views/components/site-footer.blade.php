@@ -32,6 +32,13 @@
                     <li><a href="{{ route('verify.index') }}" class="inline-flex items-center gap-1.5 transition hover:text-white">Verify a Certificate</a></li>
                     <li><a href="{{ route('about') }}" class="inline-flex items-center gap-1.5 transition hover:text-white">About Us</a></li>
                     <li><a href="{{ route('contact') }}" class="inline-flex items-center gap-1.5 transition hover:text-white">Contact</a></li>
+                    <li class="pt-2">
+                        <a href="{{ auth()->check() ? route('admin.dashboard') : route('login') }}"
+                           class="inline-flex items-center gap-2 rounded-lg border border-navy-700 px-3 py-2 font-medium text-navy-200 transition hover:border-gold-500 hover:text-gold-400">
+                            <x-ui-icon name="lock-closed" class="h-4 w-4" />
+                            {{ auth()->check() ? 'Admin console' : 'Staff login' }}
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -55,7 +62,14 @@
         </div>
 
         <div class="mt-12 flex flex-col gap-3 border-t border-navy-800 pt-6 text-xs text-navy-400 sm:flex-row sm:items-center sm:justify-between">
-            <p>&copy; {{ now()->year }} {{ config('app.name') }}. All rights reserved.</p>
+            <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span>&copy; {{ now()->year }} {{ config('app.name') }}. All rights reserved.</span>
+                <span aria-hidden="true">·</span>
+                <a href="{{ auth()->check() ? route('admin.dashboard') : route('login') }}" class="inline-flex items-center gap-1.5 transition hover:text-white">
+                    <x-ui-icon name="lock-closed" class="h-3.5 w-3.5" />
+                    {{ auth()->check() ? 'Admin console' : 'Staff login' }}
+                </a>
+            </p>
             <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
                 <span class="inline-flex items-center gap-1.5"><x-ui-icon name="shield-check" class="h-3.5 w-3.5 text-gold-400" /> ISO 9001</span>
                 <span aria-hidden="true">·</span>

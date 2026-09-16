@@ -27,7 +27,7 @@
         @endif
         <span class="badge {{ $levelStyles }}">
             <span class="h-1.5 w-1.5 rounded-full {{ $levelDot }}"></span>
-            {{ $course->level->getLabel() }}
+            {{ $course->level->label() }}
         </span>
     </div>
 
@@ -55,7 +55,7 @@
             <x-ui-icon name="video-camera" class="h-4 w-4 shrink-0 text-navy-400" />
             <div>
                 <dt class="text-xs uppercase tracking-wide text-navy-400">Delivery</dt>
-                <dd class="font-medium text-navy-800">{{ $course->delivery_mode->getLabel() }}</dd>
+                <dd class="font-medium text-navy-800">{{ $course->delivery_mode->label() }}</dd>
             </div>
         </div>
         <div class="flex items-center gap-2">

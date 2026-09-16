@@ -10,7 +10,7 @@ class ContactController extends Controller
 {
     public function store(StoreContactRequest $request): RedirectResponse
     {
-        Enrollment::create($request->validated());
+        Enrollment::create($request->safe()->except('cf-turnstile-response'));
 
         return redirect()
             ->route('contact')
